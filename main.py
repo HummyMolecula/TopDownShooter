@@ -51,7 +51,7 @@ def render_entities(hero, enemies):
         proj.render(screen)
     for enemy in enemies:
         enemy.render(screen)
-    
+
 def process_keys(keys, hero):
     if keys[pygame.K_w]:
         hero.sprite.movementVector[1] -= 1
@@ -67,7 +67,7 @@ def process_keys(keys, hero):
         hero.sprite.equippedWeapon = hero.sprite.availableWeapons[1]
     if keys[pygame.K_3]:
         hero.sprite.equippedWeapon = hero.sprite.availableWeapons[2]
-        
+
 def process_mouse(mouse, hero):
     if mouse[0]:
         hero.sprite.shoot(pygame.mouse.get_pos())
@@ -88,10 +88,10 @@ def game_loop():
             if event.type == pygame.QUIT:
                 return True
         screen.fill(BGCOLOR)
-        
+
         process_keys(keys, hero)
         process_mouse(mouse, hero)
-        
+
         # Enemy spawning process
         if lastEnemy < currentTime - 200 and len(enemies) < 50:
             spawnSide = random.random()
@@ -104,10 +104,10 @@ def game_loop():
             else:
                 enemies.add(Enemy((random.randint(0, size[0]), size[1])))
             lastEnemy = currentTime
-        
+
         score += move_entities(hero, enemies, clock.get_time()/17)
         render_entities(hero, enemies)
-        
+
         # Health and score render
         for hp in range(hero.sprite.health):
             screen.blit(healthRender, (15 + hp*35, 0))
@@ -116,7 +116,7 @@ def game_loop():
         scoreRect.right = size[0] - 20
         scoreRect.top = 20
         screen.blit(scoreRender, scoreRect)
-        
+
         pygame.display.flip()
         clock.tick(120)
 
@@ -125,11 +125,11 @@ while not done:
     keys = pygame.key.get_pressed()
     mouse = pygame.mouse.get_pressed()
     currentTime = pygame.time.get_ticks()
-    
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-    
+
     if keys[pygame.K_r]:
         done = game_loop()
 pygame.quit()
